@@ -21,7 +21,7 @@ public:
 	void AMisplacedTileSolve();
 	int misplacedTileCount(Node*);
 	void AEuclidSolve();
-	float EuclidCost(Node*);
+	double EuclidCost(Node*);
 	int findNum(Node*, int);
 	//real
 	Problem(string);
@@ -30,4 +30,6 @@ public:
 	Node* moveUp(Node*);
 	Node* moveDown(Node*);
 	void printSolution(Node*);
+	int getExpandedTotal();
+	int getMaxQueue();
 };

@@ -8,12 +8,13 @@ using namespace std;
 class Node {
 private:
 	string input;   //create node function. counter for g(n)
-	int depth;
+	double depth;
 	Node* parent;
 	vector<Node*> children;
 	int blank_row;
 	int blank_col;
-	int hcost;
+	double hcost;
+	double cost;
 public:
 	//test constructor
 	Node(string, int);
@@ -24,15 +25,14 @@ public:
 	Node(int[3][3]);
 	void Add_Child(Node*, int);
 	void set_parent(Node*);
-	void set_cost(Node*, int);
-	int getCost();
-	int getdepth();
+	void set_cost(Node*, double);
+	double getCost();
+	double getdepth();
 	int getBlankCol();
 	int getBlankRow();
-	int getHCost();
+	double getHCost();
 	Node* getParent();
 	void setdepth(Node*);
 	void print();
-	int cost;
 };
 

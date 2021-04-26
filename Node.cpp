@@ -116,11 +116,11 @@ Node::Node(int newState[3][3]) {
 
 }
 
-int Node::getCost() {
+double Node::getCost() {
 	return cost;
 }
 
-int Node::getdepth() {
+double Node::getdepth() {
 	return depth;
 }
 
@@ -137,7 +137,7 @@ void Node::Add_Child(Node* c, int addCost) {
 	//cost = h(n) + g(n)
 }
 
-void Node::set_cost(Node* c, int newCost) {
+void Node::set_cost(Node* c, double newCost) {
 	hcost = newCost;
 	cost = c->depth + newCost;
 }
@@ -163,7 +163,7 @@ int Node::getBlankRow() {
 	return blank_row;
 }
 
-int Node::getHCost() {
+double Node::getHCost() {
 	return hcost;
 }
 

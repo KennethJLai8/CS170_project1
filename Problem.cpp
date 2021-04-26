@@ -220,6 +220,8 @@ void Problem::UniformSolve() {
 	Node* solution = NULL;
 	bool inExplored = false;
 	bool goal = true;
+	maxFrontierSize = 0;
+	numNodesExpanded = 0;
 	while (!frontier.empty()) {
 		curNode = frontier.at(0);
 		goal = true;
@@ -237,11 +239,11 @@ void Problem::UniformSolve() {
 			}
 		}
 		if (goal) {
-			cout << "solution found" << endl;
+			cout << "Optimal solution found" << endl;
 			solution = curNode;
 			printSolution(solution);
 			cout << "Found after expanding " << numNodesExpanded << " nodes!" << endl;
-			cout << "Max Frontier size was: " << maxFrontierSize << " nodes!" << endl;
+			cout << "Max Frontier size was: " << maxFrontierSize << " nodes!" << endl; 
 			return;
 		}
 		for (int i = 0; i < explored.size(); i++) {
@@ -256,7 +258,7 @@ void Problem::UniformSolve() {
 				}
 			}
 			if (inExplored) {
-				cout << "We've already done this one!!" << endl;
+				//cout << "We've already done this one!!" << endl;
 				break;
 			}
 		}
@@ -317,6 +319,8 @@ void Problem::AMisplacedTileSolve() {
 	Node* solution = NULL;
 	bool inExplored = false;
 	bool goal = true;
+	maxFrontierSize = 0;
+	numNodesExpanded = 0;
 	while (!frontier.empty()) {
 		curNode = frontier.at(0);
 		goal = true;
@@ -334,11 +338,11 @@ void Problem::AMisplacedTileSolve() {
 			}
 		}
 		if (goal) {
-			cout << "solution found" << endl;
+			cout << "Optimal solution found" << endl;
 			solution = curNode;
 			printSolution(solution);
 			cout << "Found after expanding " << numNodesExpanded << " nodes!" << endl;
-			cout << "Max Frontier size was: " << maxFrontierSize << " nodes!" << endl;
+			cout << "Max Frontier size was: " << maxFrontierSize << " nodes!" << endl; 
 			return;
 		}
 		for (int i = 0; i < explored.size(); i++) {
@@ -353,7 +357,7 @@ void Problem::AMisplacedTileSolve() {
 				}
 			}
 			if (inExplored) {
-				cout << "We've already done this one!!" << endl;
+				//cout << "We've already done this one!!" << endl;
 				break;
 			}
 		}
@@ -438,6 +442,8 @@ void Problem::AEuclidSolve() {
 	Node* solution = NULL;
 	bool inExplored = false;
 	bool goal = true;
+	maxFrontierSize = 0;
+	numNodesExpanded = 0;
 	while (!frontier.empty()) {
 		curNode = frontier.at(0);
 		goal = true;
@@ -455,7 +461,7 @@ void Problem::AEuclidSolve() {
 			}
 		}
 		if (goal) {
-			cout << "solution found" << endl;
+			cout << "Optimal solution found" << endl;
 			solution = curNode;
 			printSolution(solution);
 			cout << "Found after expanding " << numNodesExpanded << " nodes!" << endl;
@@ -528,9 +534,9 @@ void Problem::AEuclidSolve() {
 	cout << "After expanding " << numNodesExpanded << ", No solution could be found. \nMax frontier size was: " << maxFrontierSize << endl;
 }
 
-float Problem::EuclidCost(Node* curNode) {
+double Problem::EuclidCost(Node* curNode) {
 
-	float totalCost = 0;
+	double totalCost = 0;
 	int currentLoc = 0;
 	int x = 0;
 	int y = 0;
@@ -540,11 +546,11 @@ float Problem::EuclidCost(Node* curNode) {
 				currentLoc = findNum(curNode, goalState[i][j]);
 				if (currentLoc > 5) {
 					x = 2;
-					y = currentLoc - 5;
+					y = currentLoc - 6;
 				}
 				else if (currentLoc > 2) {
 					x = 1;
-					y = currentLoc - 2;
+					y = currentLoc - 3;
 				}
 				else {
 					x = 0;
@@ -587,4 +593,12 @@ void Problem::printSolution(Node* sol) {
 		cout << endl;
 	}
 	cout << endl;
+}
+
+int Problem::getExpandedTotal() {
+	return numNodesExpanded;
+}
+
+int Problem::getMaxQueue() {
+	return maxFrontierSize;
 }
