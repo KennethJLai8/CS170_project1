@@ -16,24 +16,16 @@ Node::Node() {
 	input = "";
 	parent = NULL;
 }
-
-void Node::print() {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			cout << state[i][j] << " ";
-		}
-		cout << endl;
-	}
-}
-Node::Node(string in) {
-  parent = NULL;
-  depth = 0;
+/*
+Node::Node(string in, int d) {
+	parent = NULL;
+	cost = d;
 	cout << "inputing string" << endl;
 	input = in;
 	stringstream tempStream;
 	tempStream << input;
 	string check;
-	int *temp_int = new int[8];
+	int* temp_int = new int[8];
 	int newNumber = 0;
 	int numindex = 0;
 	while (!tempStream.eof())
@@ -47,7 +39,6 @@ Node::Node(string in) {
 			break;
 		}
 	}
-	cout << "The current numindex is " << numindex << endl;
 	if (numindex >= 9)
 	{
 		for (int i = 0; i < 3; i++)
@@ -61,35 +52,121 @@ Node::Node(string in) {
 		}
 	}
 }
-
-Node::Node(int newState[3][3]){
-  for(int i; i<3; i++){
-    for(int j; j<3; j++){
-      state[i][j] = newState[i][j];
-    }
-  }
+*/
+Node::Node(string in) {
+	parent = NULL;
+	depth = 0;
+	cost = 0;
+	depth = 0;
+	//cout << "inputing string" << endl;
+	input = in;
+	stringstream tempStream;
+	tempStream << input;
+	string check;
+	int* temp_int = new int[8];
+	int newNumber = 0;
+	int numindex = 0;
+	while (!tempStream.eof())
+	{
+		tempStream >> check;
+		if (stringstream(check) >> newNumber && numindex < 9) {
+			temp_int[numindex] = newNumber;
+			numindex++;
+		}
+		if (numindex >= 9) {
+			break;
+		}
+	}
+	//cout << "The current numindex is " << numindex << endl;
+	if (numindex >= 9)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				state[i][j] = temp_int[i * 3 + j];
+				cout << state[i][j] << " ";
+				if (state[i][j] == 0) {
+					blank_col = j;
+					blank_row = i;
+				}
+			}
+			cout << endl;
+		}
+	}
 }
 
-int Node::getdepth(){
-  return depth;
+Node::Node(int newState[3][3]) {
+	blank_col = 0;
+	blank_row = 0;
+	cost = 0;
+	depth = 0;
+	hcost = 0;
+	parent = NULL;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			state[i][j] = newState[i][j];
+			if (state[i][j] == 0)
+			{
+				blank_col = j;
+				blank_row = i;
+			}
+		}
+	}
+
 }
 
-void Node::setdepth(Node* p){
-  depth = p->getdepth() + 1;
+int Node::getCost() {
+	return cost;
 }
 
-void Node::Add_Child(Node* c, int addCost){
-  c->set_parent(this);
-  setdepth(c);
-  c->set_cost(c, addCost);
-  children.push_back(c);
-  
-  //cost = h(n) + g(n)
+int Node::getdepth() {
+	return depth;
 }
 
-void Node::set_cost(Node* c, int newCost){
-  cost = c->depth + newCost;
+void Node::setdepth(Node* p) {
+	depth = p->getdepth() + 1;
 }
-void Node::set_parent(Node* p){
-  parent = p;
+
+void Node::Add_Child(Node* c, int addCost) {
+	c->set_parent(this);
+	setdepth(c);
+	c->set_cost(c, addCost);
+	children.push_back(c);
+
+	//cost = h(n) + g(n)
+}
+
+void Node::set_cost(Node* c, int newCost) {
+	hcost = newCost;
+	cost = c->depth + newCost;
+}
+void Node::set_parent(Node* p) {
+	parent = p;
+}
+
+void Node::print() {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			cout << state[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+int Node::getBlankCol() {
+	return blank_col;
+}
+
+
+int Node::getBlankRow() {
+	return blank_row;
+}
+
+int Node::getHCost() {
+	return hcost;
+}
+
+Node* Node::getParent() {
+	return parent;
 }
